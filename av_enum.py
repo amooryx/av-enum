@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import sys
+from pathlib import Path
 
 TOOL = "av-enum"
 DESCRIPTION = "Enumerate installed AV/EDR products and services on a host"
@@ -34,10 +35,21 @@ def run(args: argparse.Namespace) -> int:
     This is a scaffold: it validates input, states scope, and defines the
     workflow. Extend `run()` with the checks your engagement needs.
     """
-    banner()
-    print(f"[*] target : {args.target}")
-    print(f"[*] output : {args.output or '(stdout)'}")
-    print("[*] scaffold ready - implement engagement-specific logic in run().")
+    report = "\n".join(
+        (
+            f"[ {TOOL} ] {DESCRIPTION}",
+            f"[*] target : {args.target}",
+            f"[*] output : {args.output or '(stdout)'}",
+            "[*] scaffold ready - implement engagement-specific logic in run().",
+        )
+    )
+    if args.output:
+        try:
+            Path(args.output).write_text(report + "\n", encoding="utf-8")
+        except (OSError, UnicodeError, ValueError) as exc:
+            print(f"[!] could not write output file {args.output!r}: {exc}", file=sys.stderr)
+            return 1
+    print(report)
     return 0
 
 

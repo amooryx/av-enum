@@ -27,6 +27,12 @@ python av_enum.py <target>
 | `-v, --verbose` | Verbose output |
 | `-y, --yes` | Skip the authorisation prompt |
 
+`--output` saves the report as UTF-8 and the report is also printed to stdout.
+If the file cannot be written, the command reports the error and exits nonzero.
+
+The current implementation is a scaffold: it prints the supplied target and
+does not inspect local or remote hosts or enumerate AV/EDR products.
+
 ## Disclaimer
 
 > **Authorised security testing only.** Use this against systems you own or have
